@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeVapor | Кастомные кейсы для АКБ</title>
+    <!-- Подключаем современный шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Цветовая палитра: Сталь и Лава */
+        :root {
+            --steel-dark: #121315;
+            --steel-light: #23252a;
+            --lava: #ff4500;
+            --lava-glow: rgba(255, 69, 0, 0.5);
+            --text-main: #f0f0f0;
+            --text-muted: #9a9ca1;
+        }
+
+        /* Базовые настройки и плавный скролл */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--steel-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Навигация (Шапка) */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(18, 19, 21, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--lava);
+            z-index: 1000;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        nav {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        nav a:hover {
+            color: var(--lava);
+            text-shadow: 0 0 10px var(--lava-glow);
+        }
+
+        /* Главный экран (Hero) с видео */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: contain; /* Сохраняет пропорции 16:9 */
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(18, 19, 21, 0.7), rgba(18, 19, 21, 1));
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--lava);
+            box-shadow: 0 0 20px var(--lava-glow);
+            object-fit: cover;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px var(--lava-glow);
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Общие стили для секций */
+        section {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h2.section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--lava);
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--lava-glow);
+        }
+
+        /* Преимущества */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background: var(--steel-light);
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 4px solid var(--lava);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .feature-card h3 {
+            margin-top: 0;
+            color: var(--text-main);
+        }
+
+        /* Каталог */
+        .product-card {
+            display: flex;
+            background: var(--steel-light);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px var(--lava-glow);
+        }
+        .product-img {
+            width: 45%;
+            object-fit: cover;
+            background-color: #000; 
+        }
+        .product-info {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 55%;
+        }
+        .product-info h3 {
+            font-size: 2rem;
+            margin: 0 0 15px 0;
+        }
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--lava);
+            margin: 0 0 20px 0;
+        }
+        .product-desc {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        /* Кнопка */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #d33c00, var(--lava));
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 5px;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--lava-glow);
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            box-shadow: 0 0 25px var(--lava);
+            transform: translateY(-2px);
+        }
+
+        /* О нас */
+        .about-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            text-align: center;
+        }
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+
+        /* Подвал */
+        footer {
+            background: #0a0a0c;
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: var(--text-muted);
+            text-decoration: underline;
+        }
+        footer a:hover {
+            color: var(--lava);
+        }
+
+        /* Анимации при скролле */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Адаптив для мобильных телефонов */
+        @media (max-width: 768px) {
+            .product-card {
+                flex-direction: column;
+            }
+            .product-img {
+                width: 100%;
+                height: 250px;
+            }
+            .product-info {
+                width: 100%;
+                padding: 25px;
+                box-sizing: border-box;
+            }
+            .hero h1 { font-size: 2.2rem; }
+            nav { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Меню -->
+    <header>
+        <nav>
+            <a href="#hero">Главная</a>
+            <a href="#catalog">Каталог</a>
+            <a href="#advantages">Преимущества</a>
+            <a href="#about">О нас</a>
+        </nav>
+    </header>
+
+    <!-- Шапка с видео -->
+    <section id="hero" class="hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="твое_видео.mp4.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content fade-in">
+            <img src="аватарка.png.png" alt="Логотип" class="avatar">
+            <h1>PrimeVapor</h1>
+            <p>Броня для твоих аккумуляторов</p>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section id="advantages">
+        <h2 class="section-title fade-in">Почему мы?</h2>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <h3>Прочный PETG-CF</h3>
+                <p>Кейсы напечатаны из инженерного пластика, усиленного углеволокном. Выдержат падение и защитят оплетку.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <h3>Плотная посадка</h3>
+                <p>Идеально подогнанные размеры под формат 18650. Аккумуляторы не гремят и не выпадают даже при тряске.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <h3>Кастомный подход</h3>
+                <p>Каждое изделие проходит ручную постобработку. Стильный и брутальный дизайн, который приятно держать в руках.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Каталог -->
+    <section id="catalog">
+        <h2 class="section-title fade-in">Каталог</h2>
+
+        <!-- Товар 1: Кейс на 2 АКБ -->
+        <div class="product-card fade-in">
+            <img src="фото_кейса_2акб.jpg.jpg" alt="Кейс на 2 АКБ" class="product-img">
+            <div class="product-info">
+                <h3>Кейс для АКБ (2 слота)</h3>
+                <div class="price">500 ₽</div>
+                <div class="product-desc">
+                    Компактный и надежный бокс для двух аккумуляторов формата 18650. Крышка фиксируется плотно, исключая случайное открытие в рюкзаке. Устойчив к ударам и износу.
+                </div>
+                <a href="https://t.me/твой_юзернейм" target="_blank" class="btn">Заказать в Telegram</a>
+            </div>
+        </div>
+
+        <!-- Товар 2: Кейс на 4 АКБ -->
+        <div class="product-card fade-in">
+            <img src="фото_кейса_4акб.jpg.jpg" alt="Кейс на 4 АКБ" class="product-img">
+            <div class="product-info">
+                <h3>Кейс для АКБ (4 слота)</h3>
+                <div class="price">700 ₽</div>
+                <div class="product-desc">
+                    Вместительный тактический кейс на четыре аккумулятора 18650. Идеальное решение для долгих поездок или мощных сетапов, когда запас энергии всегда должен быть под рукой.
+                </div>
+                <a href="https://t.me/твой_юзернейм" target="_blank" class="btn">Заказать в Telegram</a>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- О нас (Комьюнити) -->
+    <section id="about">
+        <h2 class="section-title fade-in">Наше комьюнити</h2>
+        <div class="about-links fade-in">
+            <p class="about-text">
+                Мы — проект PrimeVapor. Делаем качественные аксессуары для девайсов и пишем честные обзоры на железо. Присоединяйся к нашему комьюнити в Telegram, чтобы следить за новинками, общаться с единомышленниками и участвовать в обсуждениях.
+            </p>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                <a href="https://t.me/PrimeVapor_Review" target="_blank" class="btn">Prime Review (Обзоры)</a>
+                <a href="https://t.me/Prime_Vapor" target="_blank" class="btn">Группа PrimeVapor</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал (Footer) -->
+    <footer>
+        <p>© 2026 PrimeVapor. Все права защищены.</p>
+        <p>Сайт носит исключительно информационный характер. <a href="#" onclick="alert('Пользовательское соглашение:\n\nОставляя заявку в Telegram, вы соглашаетесь с условиями индивидуального заказа. Все кейсы изготавливаются методом 3D-печати. Гарантия на механические повреждения по вине пользователя не распространяется.'); return false;">Пользовательское соглашение</a></p>
+    </footer>
+
+    <!-- Скрипт для плавного появления блоков -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
+
+</body>
+</html>
