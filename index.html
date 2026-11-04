@@ -3,32 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeVapor | Кастомные кейсы для АКБ</title>
-    <!-- Подключаем современный шрифт -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>PrimeVapor | Инженерные кейсы из PETG-CF для АКБ 18650</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Цветовая палитра: Сталь и Лава */
+        /* Палитра в стиле нового логотипа PV: Обсидиан, Титан, Холодный Пар и Бронзовый отсвет */
         :root {
-            --steel-dark: #121315;
-            --steel-light: #23252a;
-            --lava: #ff4500;
-            --lava-glow: rgba(255, 69, 0, 0.5);
-            --text-main: #f0f0f0;
-            --text-muted: #9a9ca1;
+            --bg-obsidian: #07090d;
+            --bg-surface: #0e1218;
+            --bg-card: rgba(18, 24, 33, 0.75);
+            --bg-card-hover: rgba(24, 32, 44, 0.9);
+            
+            --steel-bright: #e2e8f0;
+            --steel-mid: #94a3b8;
+            --steel-dark: #475569;
+            
+            --vapor-cyan: #7dd3fc;
+            --vapor-glow: rgba(125, 211, 252, 0.18);
+            --bronze-accent: #d4a373; /* Теплый отсвет как в нижней части лого PV */
+            
+            --border-subtle: rgba(148, 163, 184, 0.14);
+            --border-highlight: rgba(226, 232, 240, 0.35);
+            
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
         }
 
-        /* Базовые настройки и плавный скролл */
+        * {
+            box-sizing: border-box;
+        }
+
         html {
             scroll-behavior: smooth;
         }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--steel-dark);
+            background-color: var(--bg-obsidian);
             color: var(--text-main);
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(212, 163, 115, 0.04) 0%, transparent 40%);
         }
 
         /* Навигация (Шапка) */
@@ -36,44 +56,75 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(18, 19, 21, 0.9);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--lava);
+            background: rgba(7, 9, 13, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-subtle);
             z-index: 1000;
-            padding: 15px 0;
-            display: flex;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-        nav {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 14px;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-        nav a:hover {
-            color: var(--lava);
-            text-shadow: 0 0 10px var(--lava-glow);
+            padding: 14px 24px;
         }
 
-        /* Главный экран (Hero) с видео */
+        .header-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            font-size: 1rem;
+        }
+
+        .brand-mini img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border-highlight);
+            object-fit: cover;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1.2px;
+            transition: color 0.25s ease, text-shadow 0.25s ease;
+        }
+
+        nav a:hover {
+            color: var(--steel-bright);
+            text-shadow: 0 0 12px var(--vapor-glow);
+        }
+
+        /* Главный экран (Hero) */
         .hero {
             position: relative;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            padding: 110px 20px 70px;
             overflow: hidden;
         }
+
         .hero-video {
             position: absolute;
             top: 50%;
@@ -83,313 +134,702 @@
             width: auto;
             height: auto;
             z-index: 0;
-            transform: translateX(-50%) translateY(-50%);
-            object-fit: contain; /* Сохраняет пропорции 16:9 */
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.35;
+            filter: saturate(0.2) contrast(1.15); /* Приглушает старое видео под стальной стиль, пока не заменишь */
         }
+
         .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 50% 35%, rgba(15, 23, 34, 0.4) 0%, rgba(7, 9, 13, 0.96) 75%),
+                linear-gradient(to bottom, rgba(7, 9, 13, 0.5) 0%, var(--bg-obsidian) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 820px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            padding: 6px;
+            border-radius: 26px;
+            background: linear-gradient(145deg, rgba(226, 232, 240, 0.35), rgba(71, 85, 105, 0.1), rgba(212, 163, 115, 0.25));
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.8),
+                0 0 40px var(--vapor-glow);
+        }
+
+        .avatar {
+            width: 136px;
+            height: 136px;
+            border-radius: 22px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .hero-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 7px 16px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.08);
+            border: 1px solid var(--border-subtle);
+            color: var(--steel-bright);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 65%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.6));
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.2vw, 1.22rem);
+            color: var(--text-muted);
+            margin: 0;
+            max-width: 620px;
+            line-height: 1.65;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+            color: #07090d;
+            padding: 15px 32px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 10px;
+            border: 1px solid #ffffff;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(226, 232, 240, 0.15);
+            transition: all 0.28s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(226, 232, 240, 0.28);
+            background: #ffffff;
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+            border: 1px solid var(--border-highlight);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.09);
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Общие секции */
+        section {
+            padding: 90px 20px;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--vapor-cyan);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        h2.section-title {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            background: linear-gradient(90deg, #f8fafc, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Свойства и инженерия кейсов (6 карточек) */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            padding: 32px 28px;
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(18, 19, 21, 0.7), rgba(18, 19, 21, 1));
-            z-index: 1;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            padding: 20px;
-        }
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid var(--lava);
-            box-shadow: 0 0 20px var(--lava-glow);
-            object-fit: cover;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            margin: 0;
-            text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px var(--lava-glow);
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--steel-bright), transparent);
+            opacity: 0.35;
         }
 
-        /* Общие стили для секций */
-        section {
-            padding: 80px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        h2.section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--lava);
-            margin-bottom: 50px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px var(--lava-glow);
-        }
-
-        /* Преимущества */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        .feature-card {
-            background: var(--steel-light);
-            padding: 30px;
-            border-radius: 10px;
-            border-left: 4px solid var(--lava);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transform: translateY(-6px);
+            border-color: var(--border-highlight);
+            background: var(--bg-card-hover);
         }
+
+        .feature-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--bronze-accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
         .feature-card h3 {
-            margin-top: 0;
+            margin: 0 0 12px 0;
+            font-size: 1.25rem;
             color: var(--text-main);
         }
 
+        .feature-card p {
+            margin: 0;
+            color: var(--text-muted);
+            line-height: 1.65;
+            font-size: 0.95rem;
+        }
+
         /* Каталог */
-        .product-card {
+        .catalog-grid {
             display: flex;
-            background: var(--steel-light);
-            border-radius: 15px;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .product-card {
+            display: grid;
+            grid-template-columns: 45% 55%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 22px;
             overflow: hidden;
-            margin-bottom: 40px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+            transition: border-color 0.35s ease, transform 0.35s ease;
         }
+
         .product-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 25px var(--lava-glow);
+            border-color: var(--border-highlight);
+            transform: translateY(-4px);
         }
-        .product-img {
-            width: 45%;
-            object-fit: cover;
-            background-color: #000; 
-        }
-        .product-info {
+
+        /* Подиум под прозрачный PNG без фона */
+        .product-visual {
+            position: relative;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(148, 163, 184, 0.16) 0%, rgba(14, 18, 24, 0.95) 75%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 40px;
+            min-height: 360px;
+            border-right: 1px solid var(--border-subtle);
+        }
+
+        .product-img {
+            max-width: 88%;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            /* Создает реалистичную глубокую тень вокруг вырезанного PNG-объекта */
+            filter: drop-shadow(0 22px 28px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 18px rgba(125, 211, 252, 0.12));
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.06) translateY(-6px);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(7, 9, 13, 0.75);
+            border: 1px solid var(--border-subtle);
+            color: var(--steel-bright);
+        }
+
+        .product-info {
+            padding: 44px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            width: 55%;
-        }
-        .product-info h3 {
-            font-size: 2rem;
-            margin: 0 0 15px 0;
-        }
-        .price {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--lava);
-            margin: 0 0 20px 0;
-        }
-        .product-desc {
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        /* Кнопка */
-        .btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #d33c00, var(--lava));
-            color: #fff;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 5px;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--lava-glow);
-            transition: all 0.3s ease;
-        }
-        .btn:hover {
-            box-shadow: 0 0 25px var(--lava);
-            transform: translateY(-2px);
         }
 
-        /* О нас */
-        .about-links {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            text-align: center;
+        .product-info h3 {
+            font-size: 1.9rem;
+            margin: 0 0 8px 0;
+            font-weight: 800;
         }
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
+
+        .product-subtitle {
             color: var(--text-muted);
-            max-width: 700px;
+            font-size: 0.92rem;
+            margin-bottom: 20px;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .price-note {
+            font-size: 0.85rem;
+            color: var(--bronze-accent);
+            font-weight: 600;
+        }
+
+        .specs-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 28px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .specs-list li {
+            font-size: 0.88rem;
+            color: var(--steel-bright);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-subtle);
+            padding: 10px 14px;
+            border-radius: 10px;
+        }
+
+        .specs-list li span {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            line-height: 1.65;
+            font-size: 0.95rem;
             margin-bottom: 30px;
+        }
+
+        /* Сравнительная таблица */
+        .compare-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 18px;
+            overflow-x: auto;
+        }
+
+        table.compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 580px;
+        }
+
+        .compare-table th, 
+        .compare-table td {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 0.92rem;
+        }
+
+        .compare-table th {
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .compare-table th.highlight-col,
+        .compare-table td.highlight-col {
+            background: rgba(125, 211, 252, 0.05);
+            color: var(--steel-bright);
+            font-weight: 600;
+        }
+
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Комьюнити */
+        .community-box {
+            background: linear-gradient(145deg, rgba(18, 24, 33, 0.9), rgba(10, 14, 20, 0.95));
+            border: 1px solid var(--border-highlight);
+            border-radius: 22px;
+            padding: 50px 35px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .about-text {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto 32px auto;
+        }
+
+        .community-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         /* Подвал */
         footer {
-            background: #0a0a0c;
-            padding: 30px 20px;
+            background: #040608;
+            padding: 40px 20px;
             text-align: center;
-            border-top: 1px solid #333;
+            border-top: 1px solid var(--border-subtle);
             color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        footer a {
-            color: var(--text-muted);
-            text-decoration: underline;
-        }
-        footer a:hover {
-            color: var(--lava);
+            font-size: 0.85rem;
+            line-height: 1.6;
         }
 
-        /* Анимации при скролле */
+        footer a {
+            color: var(--steel-bright);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* Анимация появления */
         .fade-in {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
         }
+
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Адаптив для мобильных телефонов */
-        @media (max-width: 768px) {
+        /* Мобильная адаптация */
+        @media (max-width: 860px) {
             .product-card {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
-            .product-img {
-                width: 100%;
-                height: 250px;
+            .product-visual {
+                min-height: 280px;
+                border-right: none;
+                border-bottom: 1px solid var(--border-subtle);
             }
             .product-info {
-                width: 100%;
-                padding: 25px;
-                box-sizing: border-box;
+                padding: 28px 22px;
             }
-            .hero h1 { font-size: 2.2rem; }
-            nav { gap: 15px; }
+            .specs-list {
+                grid-template-columns: 1fr;
+            }
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+            nav {
+                gap: 16px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Меню -->
+    <!-- Шапка -->
     <header>
-        <nav>
-            <a href="#hero">Главная</a>
-            <a href="#catalog">Каталог</a>
-            <a href="#advantages">Преимущества</a>
-            <a href="#about">О нас</a>
-        </nav>
+        <div class="header-inner">
+            <a href="#hero" class="brand-mini">
+                <img src="новая ава.jpg" alt="PV Logo">
+                <span>PRIMEVAPOR</span>
+            </a>
+            <nav>
+                <a href="#Engineering">Свойства</a>
+                <a href="#catalog">Каталог</a>
+                <a href="#compare">Сравнение</a>
+                <a href="#about">Комьюнити</a>
+            </nav>
+        </div>
     </header>
 
-    <!-- Шапка с видео -->
+    <!-- Главный экран -->
     <section id="hero" class="hero">
         <video autoplay muted loop playsinline class="hero-video">
             <source src="твое_видео.mp4.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
+
         <div class="hero-content fade-in">
-            <img src="аватарка.png.png" alt="Логотип" class="avatar">
+            <div class="logo-wrapper">
+                <img src="новая ава.jpg" alt="PrimeVapor Logo" class="avatar">
+            </div>
+            <span class="hero-badge">Carbon Fiber Reinforced // PETG-CF</span>
             <h1>PrimeVapor</h1>
-            <p>Броня для твоих аккумуляторов</p>
+            <p>Инженерные кейсы из угленаполненного композита для безопасного хранения и транспортировки аккумуляторов 18650.</p>
+            <div class="hero-actions">
+                <a href="#catalog" class="btn">Выбрать кейс — от 300 ₽</a>
+                <a href="#Engineering" class="btn btn-outline">Разбор конструкции</a>
+            </div>
         </div>
     </section>
 
-    <!-- Преимущества -->
-    <section id="advantages">
-        <h2 class="section-title fade-in">Почему мы?</h2>
+    <!-- Инженерия и реальные свойства кейсов -->
+    <section id="Engineering">
+        <div class="section-header fade-in">
+            <span class="section-subtitle">Материаловедение и конструктив</span>
+            <h2 class="section-title">Почему эти кейсы практически вечные</h2>
+        </div>
+
         <div class="features-grid">
             <div class="feature-card fade-in">
-                <h3>Прочный PETG-CF</h3>
-                <p>Кейсы напечатаны из инженерного пластика, усиленного углеволокном. Выдержат падение и защитят оплетку.</p>
+                <span class="feature-tag">01 // Материал</span>
+                <h3>Углеродный композит PETG-CF</h3>
+                <p>Никакого хрупкого декоративного PLA. Корпус печатается из инженерного пластика, армированного рубленым углеродным волокном (карбоном). Выдерживает падения на асфальт, не колется на сибирском морозе и не деформируется на жаре в салоне авто.</p>
             </div>
+
             <div class="feature-card fade-in">
-                <h3>Плотная посадка</h3>
-                <p>Идеально подогнанные размеры под формат 18650. Аккумуляторы не гремят и не выпадают даже при тряске.</p>
+                <span class="feature-tag">02 // Запирание</span>
+                <h3>Слайдер на направляющих рельсах</h3>
+                <p>Вместо тонких пластиковых защелок, которые отламываются через месяц, здесь реализована сдвижная крышка по типу «ласточкин хвост». Она заходит в пазы с выверенным натягом и фиксируется в крайнем положении — кейс гарантированно не раскроется в рюкзаке.</p>
             </div>
+
             <div class="feature-card fade-in">
-                <h3>Кастомный подход</h3>
-                <p>Каждое изделие проходит ручную постобработку. Стильный и брутальный дизайн, который приятно держать в руках.</p>
+                <span class="feature-tag">03 // Тактильность</span>
+                <h3>Цепкая шагрень (Fuzzy Skin)</h3>
+                <p>Внешние стенки имеют специальную микротекстуру: кейс уверенно лежит даже в мокрых руках или перчатках, не собирает отпечатки пальцев и мелкие царапины, а верхняя крышка имеет матовый карбоновый рельеф с глубокой гравировкой.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <span class="feature-tag">04 // Безопасность</span>
+                <h3>Изолированные шахты под 18650</h3>
+                <p>Каждый аккумулятор помещается в свой индивидуальный цилиндрический слот. Банки не бьются друг о друга, кастомная термоусадка (оплетка) и изоляторы плюсового пина надежно защищены от перетирания и короткого замыкания.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <span class="feature-tag">05 // Функционал</span>
+                <h3>Смотровые и вентиляционные окна</h3>
+                <p>Вертикальные прорези вдоль корпуса решают сразу три задачи: позволяют мгновенно увидеть цвет оплетки аккумуляторов внутри, не открывая крышку, убирают лишний вес и служат газоотводными каналами.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <span class="feature-tag">06 // Калибровка</span>
+                <h3>Точные допуски без люфта</h3>
+                <p>Внутренний диаметр колодцев рассчитан так, чтобы аккумуляторы 18650 (включая банки в плотной двойной термоусадке) входили свободно, но не гремели как погремушка при быстрой ходьбе.</p>
             </div>
         </div>
     </section>
 
     <!-- Каталог -->
     <section id="catalog">
-        <h2 class="section-title fade-in">Каталог</h2>
-
-        <!-- Товар 1: Кейс на 2 АКБ -->
-        <div class="product-card fade-in">
-            <img src="фото_кейса_2акб.jpg.jpg" alt="Кейс на 2 АКБ" class="product-img">
-            <div class="product-info">
-                <h3>Кейс для АКБ (2 слота)</h3>
-                <div class="price">350 ₽</div>
-                <div class="product-desc">
-                    Компактный и надежный бокс для двух аккумуляторов формата 18650. Крышка фиксируется плотно, исключая случайное открытие в рюкзаке. Устойчив к ударам и износу.
-                </div>
-                <a href="https://t.me/emtblds" target="_blank" class="btn">Заказать в Telegram</a>
-            </div>
+        <div class="section-header fade-in">
+            <span class="section-subtitle">Линейка аксессуаров</span>
+            <h2 class="section-title">Каталог кейсов</h2>
         </div>
 
-        <!-- Товар 2: Кейс на 4 АКБ -->
-        <div class="product-card fade-in">
-            <img src="фото_кейса_4акб.jpg.jpg" alt="Кейс на 4 АКБ" class="product-img">
-            <div class="product-info">
-                <h3>Кейс для АКБ (4 слота)</h3>
-                <div class="price">550 ₽</div>
-                <div class="product-desc">
-                    Вместительный тактический кейс на четыре аккумулятора 18650. Идеальное решение для долгих поездок или мощных сетапов, когда запас энергии всегда должен быть под рукой.
+        <div class="catalog-grid">
+
+            <!-- Товар 1: Кейс на 2 АКБ -->
+            <div class="product-card fade-in">
+                <div class="product-visual">
+                    <span class="product-badge">ГРАВИРОВКА «PRIME»</span>
+                    <!-- Замени src на свой PNG без фона (например, case_2.png) -->
+                    <img src="фото_кейса_2акб.jpg.jpg" alt="Кейс PrimeVapor на 2 АКБ 18650" class="product-img">
                 </div>
-                <a href="https://t.me/emtblds" target="_blank" class="btn">Заказать в Telegram</a>
+                <div class="product-info">
+                    <h3>Кейс «PRIME» // 2 × 18650</h3>
+                    <div class="product-subtitle">Компактный EDC-формат на каждый день</div>
+                    
+                    <div class="price-row">
+                        <div class="price">300 ₽</div>
+                        <span class="price-note">В наличии и под заказ</span>
+                    </div>
+
+                    <ul class="specs-list">
+                        <li><span>Вместимость</span>2 аккумулятора 18650</li>
+                        <li><span>Материал</span>Инженерный PETG-CF (Карбон)</li>
+                        <li><span>Покрытие стенок</span>Тактическая шагрень (Anti-Slip)</li>
+                        <li><span>Механизм крышки</span>Рельсовый слайдер с фиксацией</li>
+                    </ul>
+
+                    <div class="product-desc">
+                        Плоский и практически невесомый бокс, который не оттягивает карман куртки или джинсов. Сдвижная крышка с тиснением «PRIME» легко открывается большим пальцем одной руки, надежно запирая пару сменных банок на весь день.
+                    </div>
+                    <a href="https://t.me/emtblds" target="_blank" class="btn">Заказать в Telegram — 300 ₽</a>
+                </div>
             </div>
+
+            <!-- Товар 2: Кейс на 4 АКБ -->
+            <div class="product-card fade-in">
+                <div class="product-visual">
+                    <span class="product-badge">ГРАВИРОВКА «PV»</span>
+                    <!-- Замени src на свой PNG без фона (например, case_4.png) -->
+                    <img src="фото_кейса_4акб.jpg.jpg" alt="Кейс PrimeVapor на 4 АКБ 18650" class="product-img">
+                </div>
+                <div class="product-info">
+                    <h3>Кейс «PV Quad» // 4 × 18650</h3>
+                    <div class="product-subtitle">Усиленный бокс для поездок и двухбаночных сетапов</div>
+                    
+                    <div class="price-row">
+                        <div class="price">500 ₽</div>
+                        <span class="price-note">Максимальная защита</span>
+                    </div>
+
+                    <ul class="specs-list">
+                        <li><span>Вместимость</span>4 аккумулятора 18650</li>
+                        <li><span>Материал</span>Инженерный PETG-CF (Карбон)</li>
+                        <li><span>Конструктив</span>4 независимых колодца + окна</li>
+                        <li><span>Механизм крышки</span>Широкий слайдер с гравировкой PV</li>
+                    </ul>
+
+                    <div class="product-desc">
+                        Монолитный квадратный форм-фактор с внутренними перегородками жесткости. Выдерживает серьезные нагрузки на сжатие на дне набитого рюкзака или дорожной сумки. Идеален для длительных выездов, когда весь боезапас энергии должен быть в одном месте.
+                    </div>
+                    <a href="https://t.me/emtblds" target="_blank" class="btn">Заказать в Telegram — 500 ₽</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Сравнение с обычными кейсами -->
+    <section id="compare">
+        <div class="section-header fade-in">
+            <span class="section-subtitle">Наглядная разница</span>
+            <h2 class="section-title">PETG-CF против обычных боксов</h2>
         </div>
 
+        <div class="compare-box fade-in">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Параметр</th>
+                        <th class="highlight-col">Кейс PrimeVapor (PETG-CF)</th>
+                        <th>Прозрачный кейс из шопа</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Механизм закрытия</td>
+                        <td class="highlight-col">Сдвижные рельсы (нечему отламываться)</td>
+                        <td>Тонкий язычок-защелка (перетирается за 2–4 недели)</td>
+                    </tr>
+                    <tr>
+                        <td>Поведение в рюкзаке</td>
+                        <td class="highlight-col">Плотно держит крышку при любой тряске</td>
+                        <td>Раскрывается при нажатии, акумы рассыпаются</td>
+                    </tr>
+                    <tr>
+                        <td>Устойчивость к морозу и падениям</td>
+                        <td class="highlight-col">Армирован углеволокном — гасит удар</td>
+                        <td>Хрупкий полипропилен — трескается по петлям</td>
+                    </tr>
+                    <tr>
+                        <td>Фиксация аккумуляторов</td>
+                        <td class="highlight-col">4 отдельные глубокие шахты без контакта банок</td>
+                        <td>Общий отсек, банки трутся оплетками</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <!-- О нас (Комьюнити) -->
     <section id="about">
-        <h2 class="section-title fade-in">Наше комьюнити</h2>
-        <div class="about-links fade-in">
+        <div class="community-box fade-in">
+            <span class="section-subtitle">Telegram Ecosystem</span>
+            <h2 class="section-title" style="margin-bottom: 24px;">Комьюнити PrimeVapor</h2>
             <p class="about-text">
-                Мы — проект PrimeVapor. Делаем качественные аксессуары для девайсов и пишем честные обзоры на железо. Присоединяйся к нашему комьюнити в Telegram, чтобы следить за новинками, общаться с единомышленниками и участвовать в обсуждениях.
+                PrimeVapor — это авторский проект про кастомные аксессуары, 3D-печать из инженерных пластиков и честные техничные обзоры на вейп-железо, RTA/RBA-баки и самозамес. Залетай к нам в Telegram: там мы тестируем новые прототипы, делимся намотками и общаемся со своими.
             </p>
-            <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+            <div class="community-links">
                 <a href="https://t.me/PrimeVapor_Review" target="_blank" class="btn">Prime Review (Обзоры)</a>
-                <a href="https://t.me/Prime_Vapor" target="_blank" class="btn">Группа PrimeVapor</a>
+                <a href="https://t.me/Prime_Vapor" target="_blank" class="btn btn-outline">Чат и группа PrimeVapor</a>
             </div>
         </div>
     </section>
 
-    <!-- Подвал (Footer) -->
+    <!-- Подвал -->
     <footer>
         <p>© 2026 PrimeVapor. Все права защищены.</p>
-        <p>Сайт носит исключительно информационный характер. <a href="#" onclick="alert('Пользовательское соглашение:\n\nОставляя заявку в Telegram, вы соглашаетесь с условиями индивидуального заказа. Все кейсы изготавливаются методом 3D-печати. Гарантия на механические повреждения по вине пользователя не распространяется.'); return false;">Пользовательское соглашение</a></p>
+        <p>Сайт носит информационный характер. <a href="#" onclick="alert('Пользовательское соглашение:\n\nОставляя заявку в Telegram, вы соглашаетесь с условиями индивидуального заказа. Все кейсы изготавливаются методом FDM 3D-печати из композита PETG-CF. Гарантия на умышленные механические повреждения не распространяется.'); return false;">Пользовательское соглашение</a></p>
     </footer>
 
-    <!-- Скрипт для плавного появления блоков -->
+    <!-- Скрипт анимации при скролле -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const elements = document.querySelectorAll('.fade-in');
-            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
