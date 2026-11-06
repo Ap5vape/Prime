@@ -319,7 +319,7 @@
             background: linear-gradient(135deg, #f3d5bd 0%, #c89d7c 100%);
             border: 2px solid #fde6d2;
             animation: pulseBronze 1.8s infinite ease-in-out;
-            animation-delay: 0.9s; /* Моргают в противофазе для максимального внимания */
+            animation-delay: 0.9s;
             transition: transform 0.25s ease;
         }
 
@@ -399,6 +399,7 @@
         /* Правая часть Hero: честный контейнер 16:9 */
         .hero-right {
             position: relative;
+            width: 100%;
         }
 
         .video-frame-16x9 {
@@ -407,7 +408,7 @@
             aspect-ratio: 16 / 9;
             border-radius: 20px;
             overflow: hidden;
-            background: #0a0e14;
+            background: radial-gradient(circle at 50% 50%, #162030 0%, #0a0e14 100%);
             border: 1px solid var(--border-bright);
             box-shadow: 
                 0 25px 60px rgba(0, 0, 0, 0.85),
@@ -441,6 +442,7 @@
             border-radius: 16px;
             border: 1px solid var(--border-bright);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.75);
+            z-index: 3;
         }
 
         .floating-logo-card img {
@@ -833,7 +835,6 @@
         }
 
         @media (max-width: 640px) {
-            /* Компактная двухрядная шапка со скроллом навигации на телефоне */
             header {
                 padding: 10px 14px;
             }
@@ -869,7 +870,6 @@
                 font-size: 0.8rem;
             }
 
-            /* Главный экран на телефоне */
             .hero {
                 padding: 118px 16px 45px;
                 min-height: auto;
@@ -889,7 +889,6 @@
                 font-size: 0.95rem;
             }
 
-            /* Блок мигающих кнопок Telegram на телефоне */
             .tg-spotlight-box {
                 padding: 14px;
                 border-radius: 14px;
@@ -918,7 +917,6 @@
                 width: 100%;
             }
 
-            /* Видео 16:9 и плашка на телефоне (не перекрывает видео) */
             .floating-logo-card {
                 position: static;
                 margin-top: 12px;
@@ -927,7 +925,6 @@
                 padding: 10px 14px;
             }
 
-            /* Секции и каталог на телефоне */
             section {
                 padding: 55px 16px;
             }
@@ -1053,13 +1050,16 @@
                 </div>
             </div>
 
- <div class="video-frame-16x9">
-    <video autoplay muted loop playsinline preload="auto">
-        <source src="video.mp4" type="video/mp4">
-        Ваш браузер не поддерживает воспроизведение видео.
-    </video>
-    <div class="video-overlay-gradient"></div>
-</div>
+            <!-- Восстановленный контейнер правой колонки -->
+            <div class="hero-right">
+                <div class="video-frame-16x9">
+                    <video id="hero-video" autoplay muted loop playsinline preload="auto">
+                        <source src="./video.mp4" type="video/mp4">
+                        <source src="https://raw.githubusercontent.com/Ap5vape/Prime/main/video.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает воспроизведение видео.
+                    </video>
+                    <div class="video-overlay-gradient"></div>
+                </div>
 
                 <div class="floating-logo-card">
                     <img src="новая ава.jpg" alt="PV Logo">
@@ -1081,7 +1081,7 @@
 
         <div class="catalog-list">
 
-            <!-- Кейс на 2 АКБ -->
+            <!-- Кейс на 2 АКБ (файл 2.jpg, 300 ₽) -->
             <div class="product-card">
                 <div class="product-stage">
                     <span class="stage-tag">Гравировка «PRIME»</span>
@@ -1123,7 +1123,7 @@
                 </div>
             </div>
 
-            <!-- Кейс на 4 АКБ -->
+            <!-- Кейс на 4 АКБ (файл 1.jpg, 500 ₽) -->
             <div class="product-card">
                 <div class="product-stage">
                     <span class="stage-tag">Гравировка «PV»</span>
@@ -1292,8 +1292,33 @@
         <p>Сайт носит информационный характер. <a href="#" onclick="alert('Пользовательское соглашение:\n\nОформляя заказ через Telegram, вы соглашаетесь с условиями индивидуального заказа. Все кейсы изготавливаются методом 3D-печати из инженерного композита PETG-CF.'); return false;">Пользовательское соглашение</a></p>
     </footer>
 
-    <!-- Скрипт анимации пиксельного фона -->
+    <!-- Скрипт анимации пиксельного фона и принудительного запуска видео -->
     <script>
+        // 1. Принудительный автозапуск видео (обход блокировок браузера)
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('hero-video');
+            if (video) {
+                video.muted = true;
+                video.defaultMuted = true;
+                video.playsInline = true;
+
+                const startPlay = () => {
+                    video.play().catch(() => {
+                        // Если браузер ждет первого клика/касания экрана
+                        document.addEventListener('click', () => video.play(), { once: true });
+                        document.addEventListener('touchstart', () => video.play(), { once: true });
+                    });
+                };
+
+                if (video.readyState >= 2) {
+                    startPlay();
+                } else {
+                    video.addEventListener('loadeddata', startPlay, { once: true });
+                }
+            }
+        });
+
+        // 2. Пиксельный фон
         const canvas = document.getElementById('pixel-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -1310,7 +1335,6 @@
         function initGrid() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            // На мобильных шаг сетки чуть крупнее для идеальной плавности 60 FPS
             const pixelSize = width < 640 ? 32 : 26;
             const gap = 4;
 
